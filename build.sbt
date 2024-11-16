@@ -13,14 +13,16 @@ ThisBuild / developers := List(
   )
 )
 
-lazy val root = project
+lazy val root = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("."))
   .settings(
     name := "config",
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
+  .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
+  .nativeConfigure(_.enablePlugins(ScalaNativeJUnitPlugin))
 
-lazy val examples = project
+lazy val examples = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("config-examples"))
   .settings(
     name := "config-examples",
